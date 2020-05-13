@@ -1,0 +1,11 @@
+version: '3.3'
+
+services:
+  kafka:
+    image: nanic/kafka-docker
+    hostname: localhost
+    ports:
+    - "2181:2181"
+    - "9092:9092"
+    command:
+        - /opt/kafka_2.11-1.0.2/bin/kafka-topics.sh --zookeeper localhost:2181 --list

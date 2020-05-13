@@ -2,7 +2,6 @@ package com.iamn.journey;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.Map;
@@ -11,14 +10,14 @@ import java.util.concurrent.CountDownLatch;
 import javax.annotation.PostConstruct;
 
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.IOUtils;
 import org.apache.commons.text.StringSubstitutor;
 import org.apache.kafka.streams.KafkaStreams;
 import org.apache.kafka.streams.StreamsBuilder;
 import org.apache.kafka.streams.StreamsConfig;
 import org.apache.kafka.streams.Topology;
 import org.apache.kafka.streams.kstream.KStream;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -31,7 +30,7 @@ import com.mashape.unirest.http.exceptions.UnirestException;
 @Component
 public class NeoIngestionConsumer {
 
-    private static Logger logger = Logger.getLogger(NeoIngestionConsumer.class);
+    private static Logger logger = LogManager.getLogger(NeoIngestionConsumer.class);
 
     @Autowired
     private StreamsConfig streamsConfig;
@@ -52,11 +51,10 @@ public class NeoIngestionConsumer {
     @SuppressWarnings("unchecked")
 	@PostConstruct
     public void prepareMetadata() {
-    	
-    	InputStream in = this.getClass().getResourceAsStream("/flights-metadata.txt");
+
     	try {
-			metadata = IOUtils.toString(in, Charset.defaultCharset());
-			template = FileUtils.readFileToString(new File("src/main/resources/mutations.txt"), Charset.defaultCharset());
+			metadata = FileUtils.readFileToString(new File("/apps/flights-metadata.txt"), Charset.defaultCharset());
+			template = FileUtils.readFileToString(new File("/apps/mutations.txt"), Charset.defaultCharset());
 		} catch (IOException e) {
 			logger.error("Failed reading metadata file with error, "+e.getMessage());
 		}

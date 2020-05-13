@@ -11,7 +11,8 @@ import java.util.Map;
 import org.apache.commons.io.Charsets;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.text.StringSubstitutor;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -26,7 +27,7 @@ import com.mashape.unirest.http.exceptions.UnirestException;
 public class NeoStreamsTest
 {
 	
-	private static Logger logger = Logger.getLogger(NeoStreamsTest.class);
+	private static Logger logger = LogManager.getLogger(NeoStreamsTest.class);
 	
 	private static Gson gson = new Gson();
 	
